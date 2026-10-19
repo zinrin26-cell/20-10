@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome & Canvas Confetti -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pastelPink: '#FFF0F3',
+                        softPink: '#FFB3C1',
+                        roseRed: '#C9184A',
+                        darkRose: '#800F2F',
+                        goldGlow: '#FFD700',
+                        accentGold: '#F4C430'
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        cursive: ['Dancing Script', 'cursive'],
+                        sans: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Keyframe Animations & Styles */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 50%, #ffb3c1 100%);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Gold Gradient Text */
+        .text-gold-gradient {
+            background: linear-gradient(45deg, #d4af37, #ffd700, #f3e5ab, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        /* Canvas background overlay */
+        #fxCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* LED Lights Bar */
+        .led-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            position: absolute;
+            top: 10px;
+            left: 0;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .led-bulb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: ledBlink 1.5s infinite alternate;
+        }
+
+        .led-bulb:nth-child(even) {
+            animation-delay: 0.75s;
+        }
+
+        @keyframes ledBlink {
+            0% {
+                background-color: #ff4d6d;
+                box-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d;
+            }
+            50% {
+                background-color: #ffd700;
+                box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+            }
+            100% {
+                background-color: #ff85a1;
+                box-shadow: 0 0 10px #ff85a1, 0 0 20px #ff85a1;
+            }
+        }
+
+        /* 3D Gift Box Styling & Animations */
+        .gift-box-wrapper {
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .gift-box {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, #c9184a, #800f2f);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(201, 24, 74, 0.4), 0 0 15px rgba(255, 215, 0, 0.3);
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.05) rotateY(10deg);
+        }
+
+        .gift-lid {
+            position: absolute;
+            top: -20px;
+            left: -10px;
+            width: 200px;
+            height: 45px;
+            background: linear-gradient(135deg, #ff4d6d, #a4133c);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.8s ease-in-out, opacity 0.5s;
+            z-index: 2;
+        }
+
+        .gift-box.opened .gift-lid {
+            transform: translateY(-120px) rotate(-25deg) scale(0.8);
+            opacity: 0;
+        }
+
+        /* Ribbons */
+        .ribbon-v {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 100%;
+            background: linear-gradient(to right, #ffd700, #fff3a1, #ffd700);
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        .ribbon-h {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 30px;
+            background: linear-gradient(to bottom, #ffd700, #fff3a1, #ffd700);
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        .bow {
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 40px;
+            z-index: 3;
+        }
+
+        .bow::before, .bow::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 4px solid #ffd700;
+            border-radius: 50% 50% 0 50%;
+            background: #ffe600;
+        }
+
+        .bow::before {
+            left: 0;
+            transform: rotate(-45deg);
+        }
+
+        .bow::after {
+            right: 0;
+            transform: rotate(45deg) scaleX(-1);
+        }
+
+        /* Glow animation */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 25px rgba(255, 77, 109, 0.6); }
+            50% { box-shadow: 0 0 45px rgba(255, 215, 0, 0.9); }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 2.5s infinite;
+        }
+
+        /* Glassmorphism Card Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 50px rgba(164, 19, 60, 0.15);
+        }
+
+        /* Custom Scrollbar for Modal */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff0f3;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ffb3c1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen items-center justify-between p-4 relative selection:bg-roseRed selection:text-white">
+
+    <!-- Canvas Animation Layer (Rose Petals & Floating Hearts) -->
+    <canvas id="fxCanvas"></canvas>
+
+    <!-- LED Light String Decor -->
+    <div class="led-container px-4">
+        <div class="led-bulb"></div>
+        <div class="led-bulb"></div>
+        <div class="led-bulb"></div>
+        <div class="led-bulb"></div>
+        <div class="led-bulb"></div>
+        <div class="led-bulb"></div>
+        <div class="led-bulb"></div>
+        <div class="led-bulb"></div>
+        <div class="led-bulb"></div>
+        <div class="led-bulb"></div>
+        <div class="led-bulb"></div>
+        <div class="led-bulb"></div>
+    </div>
+
+    <!-- Header Controls (Music Button) -->
+    <header class="w-full max-w-4xl flex justify-between items-center z-30 pt-4 px-2">
+        <div class="flex items-center space-x-2">
+            <span class="inline-block w-3 h-3 bg-roseRed rounded-full animate-ping"></span>
+            <span class="text-xs md:text-sm font-semibold tracking-wider text-darkRose uppercase">20 Tháng 10 • Ngày Phụ Nữ Việt Nam</span>
+        </div>
+        <button id="musicToggleBtn" onclick="toggleAudio()" class="flex items-center space-x-2 bg-white/80 hover:bg-white text-roseRed border border-roseRed/30 px-4 py-2 rounded-full shadow-md transition-all duration-300 hover:scale-105 active:scale-95 text-xs md:text-sm font-medium">
+            <i id="musicIcon" class="fa-solid fa-music animate-spin" style="animation-duration: 4s;"></i>
+            <span id="musicText">Phát Nhạc Acoustic</span>
+        </button>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="w-full max-w-3xl my-auto z-20 flex flex-col items-center text-center py-6">
+
+        <!-- Banner / Header Title -->
+        <div class="mb-6 space-y-2">
+            <span class="text-roseRed text-sm md:text-base font-semibold tracking-widest uppercase bg-rose-100/80 px-4 py-1.5 rounded-full border border-rose-200">
+                ✨ Món Quà Yêu Thương ✨
+            </span>
+            <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl font-bold text-darkRose mt-3 leading-tight drop-shadow-sm">
+                Happy Vietnamese<br/>
+                <span class="font-cursive text-4xl sm:text-6xl md:text-7xl text-gold-gradient block mt-1">Women's Day</span>
+            </h1>
+        </div>
+
+        <!-- Secret Gift Box / Card Trigger -->
+        <div id="giftSection" class="my-6 flex flex-col items-center">
+            <p id="giftHint" class="text-roseRed font-medium text-sm sm:text-base mb-4 animate-bounce flex items-center gap-2">
+                <i class="fa-solid fa-hand-pointer"></i> Chạm vào hộp quà để mở thiệp bí mật nhé!
+            </p>
+            <div class="gift-box-wrapper" onclick="openGiftBox()">
+                <div id="mainGiftBox" class="gift-box pulse-glow flex items-center justify-center">
+                    <div class="gift-lid">
+                        <div class="ribbon-v"></div>
+                        <div class="bow"></div>
+                    </div>
+                    <div class="ribbon-v"></div>
+                    <div class="ribbon-h"></div>
+                    <i class="fa-solid fa-heart text-5xl text-white/90 drop-shadow-lg animate-pulse"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Greeting Interactive Card (Hidden Initially) -->
+        <div id="greetingCard" class="glass-card rounded-3xl p-6 sm:p-10 w-full max-w-2xl text-left hidden transform scale-95 opacity-0 transition-all duration-700 shadow-2xl relative overflow-hidden border border-white/80">
+            <!-- Decorative Flower Ribbon Top Corner -->
+            <div class="absolute -top-10 -right-10 w-28 h-28 bg-roseRed/10 rounded-full blur-xl pointer-events-none"></div>
+            
+            <div class="flex items-center justify-between border-b border-roseRed/10 pb-4 mb-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-roseRed/10 flex items-center justify-center text-roseRed">
+                        <i class="fa-solid fa-crown text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-darkRose text-base sm:text-lg">Dành Tặng Phái Đẹp Tuổi Trẻ & Rực Rỡ</h3>
+                        <p class="text-xs text-roseRed/70">Gửi trọn yêu thương ngày 20/10</p>
+                    </div>
+                </div>
+                <span class="font-cursive text-2xl text-roseRed font-bold">20.10</span>
+            </div>
+
+            <!-- Typing Effect Container -->
+            <div class="min-h-[160px] sm:min-h-[140px] mb-6">
+                <p id="typedText" class="font-serif text-gray-800 text-base sm:text-lg leading-relaxed italic"></p>
+                <span id="cursor" class="inline-block w-1.5 h-5 bg-roseRed animate-pulse ml-1 align-middle"></span>
+            </div>
+
+            <!-- Detailed Wishes Section -->
+            <div id="subWishes" class="opacity-0 transition-opacity duration-1000 space-y-3 text-sm sm:text-base text-gray-700 leading-relaxed font-sans border-t border-rose-100 pt-4">
+                <p>🌸 Chúc bạn luôn tự tin, yêu thương bản thân, mỉm cười thật nhiều và lúc nào cũng rạng rỡ như những bông hoa hướng dương đón nắng.</p>
+                <p>💖 Mong rằng mỗi ngày trôi qua với bạn đều tràn ngập niềm vui, sự trân trọng và thành công trong mọi dự định tương lai!</p>
+            </div>
+
+            <!-- Action Buttons Inside Card -->
+            <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center items-center">
+                <button onclick="triggerSurprise()" class="w-full sm:w-auto bg-gradient-to-r from-roseRed to-pink-600 hover:from-darkRose hover:to-roseRed text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-pink-500/30 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 text-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-gift"></i>
+                    <span>Nhận Quà Bí Mật & Màn Bắn Tim</span>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full text-center z-20 py-4 text-xs text-darkRose/70 font-medium">
+        <p>Made with ❤️ for all amazing women on October 20th</p>
+    </footer>
+
+    <!-- Modal Popup for Special Slides & Personalized Wish -->
+    <div id="secretModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-500 p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 relative shadow-2xl transform scale-95 transition-transform duration-500 overflow-hidden border-2 border-pink-200">
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-roseRed transition-colors w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="text-center mb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-roseRed bg-rose-50 px-3 py-1 rounded-full border border-rose-100">
+                    🎁 Món Quà Đặc Biệt
+                </span>
+                <h2 class="font-serif text-2xl font-bold text-darkRose mt-2">Bức Thông Điệp Ngọt Ngào</h2>
+            </div>
+
+            <!-- Photo Slider Container -->
+            <div class="relative w-full h-48 sm:h-56 rounded-2xl overflow-hidden mb-5 bg-rose-50 border border-rose-100 flex items-center justify-center">
+                <img id="slideImg" src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80" alt="Rose Flower" class="w-full h-full object-cover transition-all duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                <p id="slideCaption" class="absolute bottom-3 left-4 right-4 text-white text-xs sm:text-sm font-medium italic text-center drop-shadow">
+                    "Bạn chính là điều tuyệt vời và xinh đẹp nhất!"
+                </p>
+                <!-- Slider Nav Arrows -->
+                <button onclick="prevSlide()" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-darkRose w-7 h-7 rounded-full flex items-center justify-center shadow transition"><i class="fa-solid fa-chevron-left text-xs"></i></button>
+                <button onclick="nextSlide()" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-darkRose w-7 h-7 rounded-full flex items-center justify-center shadow transition"><i class="fa-solid fa-chevron-right text-xs"></i></button>
+            </div>
+
+            <!-- Quote / Text -->
+            <div class="text-center space-y-2 text-sm text-gray-600 font-sans">
+                <p class="font-medium text-roseRed text-base">"Chúc bạn một ngày 20/10 ngập tràn hoa, quà và những lời chúc ngọt ngào nhất!"</p>
+                <p class="text-xs text-gray-500">Hãy luôn giữ vững nụ cười tươi tắn trên môi và sống một cuộc đời thật kiêu hãnh, hạnh phúc bạn nhé!</p>
+            </div>
+
+            <!-- Action Button -->
+            <div class="mt-6 text-center">
+                <button onclick="closeModal()" class="bg-roseRed hover:bg-darkRose text-white text-xs font-semibold px-6 py-2.5 rounded-full transition shadow-md">
+                    Cảm Ơn Yêu Thương ❤️
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        /* ===================================================
+           1. CANVAS ANIMATION: Falling Petals & Floating Hearts
+           =================================================== */
+        const canvas = document.getElementById('fxCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        // Particle Class
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = -20;
+                this.size = Math.random() * 12 + 8;
+                this.speedY = Math.random() * 1.5 + 0.8;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = (Math.random() - 0.5) * 2;
+                this.opacity = Math.random() * 0.7 + 0.3;
+                this.type = Math.random() > 0.4 ? 'petal' : 'heart'; // 60% Petals, 40% Hearts
+                this.color = ['#ff4d6d', '#ff85a1', '#f72585', '#ffb3c1', '#c9184a'][Math.floor(Math.random() * 5)];
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += Math.sin(this.y * 0.01) + this.speedX;
+                this.rotation += this.rotationSpeed;
+
+                if (this.y > height + 20) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.globalAlpha = this.opacity;
+
+                if (this.type === 'petal') {
+                    // Draw Rose Petal shape
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.bezierCurveTo(-this.size, -this.size / 2, -this.size, this.size, 0, this.size * 1.5);
+                    ctx.bezierCurveTo(this.size, this.size, this.size, -this.size / 2, 0, 0);
+                    ctx.fill();
+                } else {
+                    // Draw Heart shape
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    const s = this.size * 0.6;
+                    ctx.moveTo(0, 0);
+                    ctx.bezierCurveTo(-s, -s, -s * 1.5, s / 2, 0, s * 1.4);
+                    ctx.bezierCurveTo(s * 1.5, s / 2, s, -s, 0, 0);
+                    ctx.fill();
+                }
+
+                ctx.restore();
+            }
+        }
+
+        const particles = Array.from({ length: 45 }, () => new Particle());
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+
+        /* ===================================================
+           2. TYPING EFFECT LOGIC
+           =================================================== */
+        const textToType = "Nhân ngày Phụ nữ Việt Nam 20/10, xin gửi những lời chúc ngọt ngào và ấm áp nhất tới bạn. Chúc bạn luôn là bông hoa rực rỡ nhất, tràn đầy năng lượng, hạnh phúc và luôn được yêu thương!";
+        let typeIndex = 0;
+        let isTypingStarted = false;
+
+        function startTyping() {
+            if (isTypingStarted) return;
+            isTypingStarted = true;
+            const typedTextElement = document.getElementById('typedText');
+            const cursorElement = document.getElementById('cursor');
+
+            function typeNextChar() {
+                if (typeIndex < textToType.length) {
+                    typedTextElement.textContent += textToType.charAt(typeIndex);
+                    typeIndex++;
+                    setTimeout(typeNextChar, 45); // Typing speed
+                } else {
+                    cursorElement.style.display = 'none';
+                    // Reveal sub-wishes softly after typing ends
+                    document.getElementById('subWishes').classList.remove('opacity-0');
+                }
+            }
+            typeNextChar();
+        }
+
+
+        /* ===================================================
+           3. GIFT BOX & CARD UNVEIL
+           =================================================== */
+        let isOpened = false;
+        function openGiftBox() {
+            if (isOpened) return;
+            isOpened = true;
+
+            const box = document.getElementById('mainGiftBox');
+            const hint = document.getElementById('giftHint');
+            const card = document.getElementById('greetingCard');
+
+            // Open lid animation
+            box.classList.add('opened');
+            hint.style.display = 'none';
+
+            // Confetti burst on open
+            confetti({
+                particleCount: 80,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff4d6d', '#ffd700', '#ff85a1']
+            });
+
+            // Play music automatically on gift click
+            if (!isPlaying) {
+                toggleAudio();
+            }
+
+            // Reveal Greeting Card
+            setTimeout(() => {
+                card.classList.remove('hidden');
+                setTimeout(() => {
+                    card.classList.remove('scale-95', 'opacity-0');
+                    card.classList.add('scale-100', 'opacity-100');
+                    startTyping();
+                }, 50);
+            }, 500);
+        }
+
+
+        /* ===================================================
+           4. WEB AUDIO API: Acoustic Piano Music Synthesis
+           =================================================== */
+        let audioCtx = null;
+        let isPlaying = false;
+        let musicInterval = null;
+
+        // Sweet Melodic Scale Notes (Frequency in Hz)
+        const notes = [
+            261.63, // C4
+            293.66, // D4
+            329.63, // E4
+            349.23, // F4
+            392.00, // G4
+            440.00, // A4
+            493.88, // B4
+            523.25, // C5
+            587.33, // D5
+            659.25  // E5
+        ];
+
+        // Soft melody sequence pattern
+        const melodyPattern = [2, 4, 7, 6, 4, 2, 0, 2, 4, 5, 7, 9, 7, 4, 2];
+
+        function playPianoTone(freq, duration = 1.2) {
+            if (!audioCtx) return;
+
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                // Gentle sine wave sound resembling acoustic chime/piano
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+                // Envelope: Smooth fade-in & long decay
+                gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.2, audioCtx.currentTime + 0.1);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function toggleAudio() {
+            const btnText = document.getElementById('musicText');
+            const icon = document.getElementById('musicIcon');
+
+            if (!isPlaying) {
+                if (!audioCtx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    audioCtx = new AudioContext();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                let step = 0;
+                musicInterval = setInterval(() => {
+                    const noteIndex = melodyPattern[step % melodyPattern.length];
+                    playPianoTone(notes[noteIndex], 1.5);
+                    step++;
+                }, 400);
+
+                isPlaying = true;
+                btnText.textContent = "Tắt Nhạc";
+                icon.classList.add('animate-spin');
+            } else {
+                clearInterval(musicInterval);
+                isPlaying = false;
+                btnText.textContent = "Phát Nhạc Acoustic";
+                icon.classList.remove('animate-spin');
+            }
+        }
+
+
+        /* ===================================================
+           5. CONFETTI HEART EXPLOSION & MODAL POPUP
+           =================================================== */
+        function triggerSurprise() {
+            // Heart Confetti Fireworks
+            const heartDefaults = {
+                shapes: ['heart'],
+                colors: ['#ff1744', '#ff4081', '#f50057', '#ffd700', '#ffffff']
+            };
+
+            confetti({
+                ...heartDefaults,
+                particleCount: 60,
+                spread: 100,
+                origin: { x: 0.2, y: 0.5 }
+            });
+            confetti({
+                ...heartDefaults,
+                particleCount: 60,
+                spread: 100,
+                origin: { x: 0.8, y: 0.5 }
+            });
+
+            // Open Secret Modal Popup
+            setTimeout(() => {
+                const modal = document.getElementById('secretModal');
+                const modalBox = modal.querySelector('div');
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.classList.add('opacity-100');
+                modalBox.classList.remove('scale-95');
+                modalBox.classList.add('scale-100');
+            }, 300);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('secretModal');
+            const modalBox = modal.querySelector('div');
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalBox.classList.remove('scale-100');
+            modalBox.classList.add('scale-95');
+        }
+
+
+        /* ===================================================
+           6. PHOTO SLIDER LOGIC
+           =================================================== */
+        const slides = [
+            {
+                img: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80",
+                caption: "🌹 \"Bạn chính là điều tuyệt vời và xinh đẹp nhất!\""
+            },
+            {
+                img: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=800&q=80",
+                caption: "✨ \"Tự tin, kiêu hãnh và luôn ngập tràn năng lượng hạnh phúc.\""
+            },
+            {
+                img: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=800&q=80",
+                caption: "💖 \"Chúc cho mọi ước mơ của bạn đều trở thành hiện thực!\""
+            }
+        ];
+
+        let currentSlide = 0;
+
+        function updateSlide() {
+            const imgEl = document.getElementById('slideImg');
+            const captionEl = document.getElementById('slideCaption');
+
+            imgEl.style.opacity = '0.3';
+            setTimeout(() => {
+                imgEl.src = slides[currentSlide].img;
+                captionEl.textContent = slides[currentSlide].caption;
+                imgEl.style.opacity = '1';
+            }, 200);
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlide();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlide();
+        }
+    </script>
+</body>
+</html>
